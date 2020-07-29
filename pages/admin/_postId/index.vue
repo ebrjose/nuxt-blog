@@ -8,17 +8,14 @@
 
 <script>
 import AdminPostForm from '@/components/Admin/AdminPostForm'
-import axios from 'axios'
 
 export default {
   layout: 'admin',
   components: {
     AdminPostForm,
   },
-  async asyncData({ params }) {
-    const { data } = await axios.get(
-      'https://nuxt-blog-ce4f9.firebaseio.com/posts/' + params.postId + '.json'
-    )
+  async asyncData({ params, $axios }) {
+    const { data } = await $axios.get(`/posts/${params.postId}.json`)
 
     return { loadedPost: data }
   },

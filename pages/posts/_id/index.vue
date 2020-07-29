@@ -3,9 +3,7 @@
     <section class="post">
       <h1 class="post-title">{{ loadedPost.title }}</h1>
       <div class="post-details">
-        <div class="post-detail">
-          Last updated on {{ loadedPost.updatedDate }}
-        </div>
+        <div class="post-detail">Last updated on {{ loadedPost.updatedDate | date }}</div>
         <div class="post-detail">Written by {{ loadedPost.author }}</div>
       </div>
       <p class="post-content">{{ loadedPost.content }}</p>
@@ -13,24 +11,23 @@
     <section class="post-feedback">
       <p>
         Let me know what you think about the post, send a mail to
-        <a href="mailto:feedback@my-awesome-domain.com"
-          >feedback@my-awesome-domain.com</a
-        >.
+        <a
+          href="mailto:feedback@my-awesome-domain.com"
+        >feedback@my-awesome-domain.com</a>.
       </p>
     </section>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
-  async asyncData({ params }) {
-    const { data } = await axios.get(
-      'https://nuxt-blog-ce4f9.firebaseio.com/posts/' + params.id + '.json'
-    )
+  async asyncData({ params, $axios }) {
+    const { data } = await $axios.get(`/posts/${params.id}.json`)
 
     return { loadedPost: data }
+  },
+  head: {
+    title: 'A blog Post',
   },
   data() {
     return {

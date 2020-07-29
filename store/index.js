@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 export const state = () => ({
   loadedPosts: [],
 })
@@ -21,8 +19,9 @@ export const mutations = {
 
 export const actions = {
   nuxtServerInit(vuexContext, context) {
-    return axios
-      .get('https://nuxt-blog-ce4f9.firebaseio.com/posts.json')
+    // return context.app.$axios    esto sirve pero prefiero la otra forma
+    return this.$axios
+      .get(`/posts.json`)
       .then((res) => {
         const postsArray = []
         for (const key in res.data) {
@@ -38,8 +37,8 @@ export const actions = {
       updatedDate: new Date(),
     }
 
-    return axios
-      .post('https://nuxt-blog-ce4f9.firebaseio.com/posts.json', createdPost)
+    return this.$axios
+      .$post(`/posts.json`, createdPost)
       .then((res) => {
         vuexContext.commit('addPost', {
           ...createdPost,
@@ -49,13 +48,8 @@ export const actions = {
       .catch((e) => console.log(e))
   },
   editPost(vuexContext, editedPost) {
-    return axios
-      .put(
-        'https://nuxt-blog-ce4f9.firebaseio.com/posts/' +
-          editedPost.id +
-          '.json',
-        editedPost
-      )
+    return this.$axios
+      .$put(`/posts/${editedPost.id}.json`, editedPost)
       .then((res) => {
         vuexContext.commit('editPost', editedPost)
       })
