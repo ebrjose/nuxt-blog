@@ -74,6 +74,7 @@ export default {
   build: {},
   env: {
     baseUrl: process.env.BASE_URL || 'https://nuxt-blog-ce4f9.firebaseio.com',
+    APIKey: 'AIzaSyBX6f4gSbuvPmb7uzLLb0Xc3buFNnuBfPI',
   },
   router: {
     linkActiveClass: 'active',
